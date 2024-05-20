@@ -1,1 +1,6 @@
-{"version":3,"routes":[{"src":"/_app/immutable/.+","headers":{"cache-control":"public, immutable, max-age=31536000"}},{"src":"/","dest":"_app/prerendered/index.html"},{"src":"/test","dest":"_app/prerendered/test.html"},{"src":"/test/","headers":{"location":"/test"},"status":308},{"handle":"filesystem"}]}
+
+{
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/" }
+  ]
+}
