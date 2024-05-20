@@ -9,7 +9,7 @@ export default defineConfig({
     port:5000,
     proxy:{
       '/api':{
-        target:'http://localhost:8000/',
+        target:'https://ums-react-production.up.railway.app/',
         changeOrigin:true
       }
     }
