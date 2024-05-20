@@ -6,12 +6,14 @@ export default defineConfig({
   plugins: [react()],
   server:{
     host: '0.0.0.0',
-    port:5000,
+    port: 5000,
     proxy:{
       '/api':{
-        target:'http://localhost:8000',
-        changeOrigin:true
+        target: 'https://ums-react-production.up.railway.app/', // Added https:// to the target URL
+        // target: 'http://localhost:8000', // For local development
+        changeOrigin: true
       }
     }
   }
 })
+
