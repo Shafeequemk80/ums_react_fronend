@@ -9,8 +9,8 @@ export default defineConfig({
     port: 5000,
     proxy:{
       '/api':{
-        target: 'https://ums-react-production.up.railway.app/', // Added https:// to the target URL
-        // target: 'http://localhost:8000', // For local development
+        target: 'https://ums-react-backend-code.onrender.com/', // Added https:// to the target URL
+       //  target: 'http://localhost:8000', // For local development
         changeOrigin: true
       }
     }
