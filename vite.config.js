@@ -9,7 +9,7 @@ export default defineConfig({
     port:5000,
     proxy:{
       '/api':{
-        target:'https://ums-react.onrender.com/',
+        target:'https://ums-react-backend-code.onrender.com/',
         changeOrigin:true
       }
     }
