@@ -11,7 +11,7 @@ export default defineConfig({
       '/api':{
 
        // target: 'https://ums-react-backend-code.onrender.com', // Added https:// to the target URL
-        target: 'http://localhost:8000', // For local development
+        // target: 'http://localhost:8000', // For local development
         changeOrigin: true,
         
       }
