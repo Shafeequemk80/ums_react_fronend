@@ -36,6 +36,7 @@ function LoginScreen() {
     isPasswordValid(passwordValue, setPassword, passwordRef);
   };
   const handleSubmit = async (e) => {
+    alert('efszg')
     e.preventDefault();
     try {
       if (
@@ -48,6 +49,7 @@ function LoginScreen() {
 
         navigate("/");
       }
+   
     } catch (err) {
       console.log(err);
       
