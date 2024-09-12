@@ -61,40 +61,78 @@ function RegisterScreenAdmin() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
+    // Show loading toast
+    const id = toast.loading("Please wait...");
+  
     if (password !== confirmPassword) {
-      toast.error("Password do not Match");
-    } else {
-      try {
-        if (
-          isEmailValid(email, setEmail, emailRef) &&
-          nameValidate(name, setUsername, usernameRef) &&
-          isPasswordValid(password, setPassword, passwordRef) &&
-          isPasswordValid(confirmPassword, setConfirmPassword, cpasswordRef)
-        ) {
-          const formData = new FormData();
-          formData.append("name", name);
-          formData.append("email", email);
-          formData.append("password", password);
-          formData.append("image", imageFile);
-
-          const res = await register(formData).unwrap();
-
-          dispatch(setCredentials({ ...res }));
-          navigate("/admin/dashboard");
-        }
-      } catch (err) {
-        if (
-          err?.data?.message ===
-          "Cannot read properties of undefined (reading 'filename')"
-        ) {
-          toast.error("Please add an image");
-        } else {
-          toast.error(err?.data?.message || err.error);
-        }
+      toast.update(id, {
+        render: "Passwords do not match",
+        type: "error",
+        isLoading: false,
+        autoClose: 3000,
+      });
+      return;
+    }
+  
+    // Validation checks
+    const isFormValid =
+      isEmailValid(email, setEmail, emailRef) &&
+      nameValidate(name, setUsername, usernameRef) &&
+      isPasswordValid(password, setPassword, passwordRef) &&
+      isPasswordValid(confirmPassword, setConfirmPassword, cpasswordRef);
+  
+    if (!isFormValid) {
+      toast.update(id, {
+        render: "Invalid form input",
+        type: "error",
+        isLoading: false,
+        autoClose: 3000,
+      });
+      return;
+    }
+  
+    try {
+      // Prepare form data
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("email", email);
+      formData.append("password", password);
+      formData.append("image", imageFile);
+  
+      // API request to register user
+      const res = await register(formData).unwrap();
+  
+      // Update credentials and redirect on success
+      dispatch(setCredentials({ ...res }));
+      toast.update(id, {
+        render: "Registration successful!",
+        type: "success",
+        isLoading: false,
+        autoClose: 3000,
+      });
+      navigate("/admin/dashboard");
+    } catch (err) {
+      // Handle image-related error
+      if (err?.data?.message?.includes("Cannot read properties of undefined")) {
+        toast.update(id, {
+          render: "Please add an image",
+          type: "warning",
+          isLoading: false,
+          autoClose: 3000,
+        });
+      } else {
+        // Handle other errors
+        toast.update(id, {
+          render: err?.data?.message || err.error,
+          type: "error",
+          isLoading: false,
+          autoClose: 3000,
+        });
       }
     }
   };
+  
   return (
     <>
       <div className="  flex justify-center" style={{ background: "#edf2f7" }}>

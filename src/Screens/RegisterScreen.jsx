@@ -67,6 +67,7 @@ function RegisterScreen() {
   };
 
   const handleSubmit = async (e) => {
+    const id = toast.loading("Please wait...");
     e.preventDefault();
 
     if (password !== confirmPassword) {
@@ -87,16 +88,34 @@ function RegisterScreen() {
 
           const res = await register(formData).unwrap();
           dispatch(setCredentials({ ...res }));
-          toast.success("Registration Succefully");
+          toast.update(id, {
+            render: "Registration Succefully",
+            type: "success",
+            isLoading: false,
+            autoClose: 3000, // Close the toast after 3 seconds
+          });
+      
           navigate("/");
         } catch (err) {
           if (
             err?.data?.message ===
-            "Cannot read properties of undefined (reading 'filename')"
+            "Cannot read properties of undefined (reading 'path')"
           ) {
-            toast.error("Please add an image");
+            toast.update(id, {
+              render: "Please add an image",
+              type: "warning",
+              isLoading: false,
+              autoClose: 5000, // Close the toast after 5 seconds
+            });
+        
           } else {
-            toast.error(err?.data?.message || err.error);
+            toast.update(id, {
+              render: err?.data?.message || err.error,
+              type: "error",
+              isLoading: false,
+              autoClose: 5000, // Close the toast after 5 seconds
+            });
+           
           }
         }
       }

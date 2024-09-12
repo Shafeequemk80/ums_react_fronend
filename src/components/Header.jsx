@@ -88,7 +88,7 @@ export default function Example() {
                         className="h-8 w-8 rounded-full"
                         src={
                           userInfo &&
-                          `${BASE_URL}static/userImages/${userInfo.image}`
+                       userInfo.image
                         }
                         alt=""
                       />

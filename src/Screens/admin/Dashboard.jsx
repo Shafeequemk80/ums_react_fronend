@@ -126,7 +126,7 @@ function Dashboard() {
                             <div className="w-10 h-10 flex-shrink-0 mr-2 sm:mr-3">
                               <img
                                 className="rounded-full"
-                                src={`${BASE_URL}static/userImages/${item.image}`}
+                                src={item.image}
                                 width="40"
                                 height="40"
                                 style={{ maxWidth: "40px", maxHeight: "40px" }}

@@ -47,7 +47,7 @@ function UpdateScreen() {
   useEffect(() => {
     setUsername(userInfo.name);
     setEmail(userInfo.email);
-    setImageUrl(`${BASE_URL}static/userImages/${userInfo.image}`);
+    setImageUrl(userInfo.image);
   }, [userInfo.setUsername, userInfo.setEmail, userInfo.image]);
 
   const handleChangeName = (e) => {
@@ -69,9 +69,15 @@ function UpdateScreen() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const id = toast.loading("Please wait...");
     if (password !== confirmPassword) {
-      toast.error("Password do not Match");
+      toast.update(id, {
+        render: "Password do not Match",
+        type: "error",
+        isLoading: false,
+        autoClose: 3000, // Close the toast after 3 seconds
+      });
+    
     } else {
       try {
         const formData = new FormData();
@@ -83,10 +89,21 @@ function UpdateScreen() {
 
         const res = await updateUser(formData).unwrap();
         dispatch(setCredentials({ ...res }));
-        toast.success("Profile Updated");
+        toast.update(id, {
+          render: "Login successful!",
+          type: "success",
+          isLoading: false,
+          autoClose: 3000, // Close the toast after 3 seconds
+        });
         navigate("/");
       } catch (err) {
-        toast.error(err?.data?.message || err.error);
+        toast.update(id, {
+          render: err?.data?.message || err.error,
+          type: "success",
+          isLoading: false,
+          autoClose: 3000, // Close the toast after 3 seconds
+        });
+        
       }
     }
   };

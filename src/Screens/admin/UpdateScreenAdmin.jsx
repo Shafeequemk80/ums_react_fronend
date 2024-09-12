@@ -50,7 +50,7 @@ function UpdateScreenAdmin() {
   useEffect(() => {
     setUsername(state.item.name);
     setEmail(state.item.email);
-    setImageUrl(`${BASE_URL}static/userImages/${state.item.image}`);
+    setImageUrl(state.item.image);
   }, [state.item.setUsername, state.item.setEmail, state.item.image]);
 
   const handleChangeName = (e) => {
@@ -71,7 +71,7 @@ function UpdateScreenAdmin() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const id = toast.loading("Please wait...");
     if (password !== confirmPassword) {
       toast.error("Password do not Match");
     } else {
@@ -85,7 +85,12 @@ function UpdateScreenAdmin() {
 
         const res = await updateUser(formData).unwrap();
         dispatch(setCredentials({ ...res }));
-        toast.success("Profile Updated");
+        toast.update(id, {
+          render: "Registration successful!",
+          type: "success",
+          isLoading: false,
+          autoClose: 3000,
+        });
         navigate("/admin/dashboard");
       } catch (err) {
         toast.error(err?.data?.message || err.error);

@@ -36,26 +36,48 @@ function LoginScreen() {
     isPasswordValid(passwordValue, setPassword, passwordRef);
   };
   const handleSubmit = async (e) => {
-    alert('efszg')
     e.preventDefault();
+    
+    // Display a loading toast notification
+    const id = toast.loading("Please wait...");
+    
     try {
+      // Validate email and password before proceeding
       if (
         isEmailValid(email, setEmail, emailRef) &&
         isPasswordValid(password, setPassword, passwordRef)
       ) {
+        // Attempt to log in
         const res = await login({ email, password }).unwrap();
-
+        
+        // Dispatch the credentials to the store on successful login
         dispatch(setCredentials({ ...res }));
-
+        
+        // Update the toast notification on success
+        toast.update(id, {
+          render: "Login successful!",
+          type: "success",
+          isLoading: false,
+          autoClose: 3000, // Close the toast after 3 seconds
+        });
+        
+        // Navigate to the home page
         navigate("/");
       }
-   
     } catch (err) {
-      console.log(err);
+      // Update the toast notification on error
+      toast.update(id, {
+        render: err?.data?.message || err.error,
+        type: "error",
+        isLoading: false,
+        autoClose: 5000, // Close the toast after 5 seconds
+      });
       
-      toast.error(err?.data?.message || err.error);
+      // Optionally, you can log the error to the console
+      console.log(err);
     }
   };
+  
   return (
     <>
       <div
