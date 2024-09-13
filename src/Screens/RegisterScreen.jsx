@@ -105,15 +105,17 @@ function RegisterScreen() {
               render: "Please add an image",
               type: "warning",
               isLoading: false,
-              autoClose: 5000, // Close the toast after 5 seconds
+              autoClose: 3000, // Close the toast after 5 seconds
             });
         
           } else {
+            console.log(err?.data?.message || err.error,);
+            
             toast.update(id, {
               render: err?.data?.message || err.error,
               type: "error",
               isLoading: false,
-              autoClose: 5000, // Close the toast after 5 seconds
+              autoClose: 2000, // Close the toast after 5 seconds
             });
            
           }

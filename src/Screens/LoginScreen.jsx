@@ -70,7 +70,7 @@ function LoginScreen() {
         render: err?.data?.message || err.error,
         type: "error",
         isLoading: false,
-        autoClose: 5000, // Close the toast after 5 seconds
+        autoClose: 3000, // Close the toast after 5 seconds
       });
       
       // Optionally, you can log the error to the console
