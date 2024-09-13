@@ -48,7 +48,7 @@ function LoginScreen() {
       ) {
         // Attempt to log in
         // Display a loading toast notification
-    const id = toast.loading("Please wait...");
+        const id = toast.loading("Please wait...");
         const res = await login({ email, password }).unwrap();
         
         // Dispatch the credentials to the store on successful login

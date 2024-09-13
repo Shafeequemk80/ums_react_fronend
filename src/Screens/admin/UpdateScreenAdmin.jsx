@@ -71,7 +71,7 @@ function UpdateScreenAdmin() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+    const id = toast.loading("Please wait...");
     if (password !== confirmPassword) {
       toast.error("Password do not Match");
     } else {
@@ -82,8 +82,8 @@ function UpdateScreenAdmin() {
         formData.append("email", email);
         formData.append("password", password);
         formData.append("image", imageFile);
+
         
-        const id = toast.loading("Please wait...");
         const res = await updateUser(formData).unwrap();
         dispatch(setCredentials({ ...res }));
         toast.update(id, {

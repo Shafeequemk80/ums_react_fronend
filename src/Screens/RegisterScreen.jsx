@@ -79,13 +79,13 @@ function RegisterScreen() {
         isPasswordValid(password, setPassword, passwordRef) &&
         isPasswordValid(confirmPassword, setConfirmPassword, cpasswordRef)
       ) {
+        const id = toast.loading("Please wait...");
         try {
           const formData = new FormData();
           formData.append("name", name);
           formData.append("email", email);
           formData.append("password", password);
           formData.append("image", imageFile);
-          const id = toast.loading("Please wait...");
           const res = await register(formData).unwrap();
           dispatch(setCredentials({ ...res }));
           toast.update(id, {
