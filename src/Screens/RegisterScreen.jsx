@@ -67,7 +67,7 @@ function RegisterScreen() {
   };
 
   const handleSubmit = async (e) => {
-    const id = toast.loading("Please wait...");
+    
     e.preventDefault();
 
     if (password !== confirmPassword) {
@@ -85,7 +85,7 @@ function RegisterScreen() {
           formData.append("email", email);
           formData.append("password", password);
           formData.append("image", imageFile);
-
+          const id = toast.loading("Please wait...");
           const res = await register(formData).unwrap();
           dispatch(setCredentials({ ...res }));
           toast.update(id, {
